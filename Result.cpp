@@ -13,7 +13,7 @@ void Result::Initialize()
 	spring.dampingCoefficient = 2.0f;
 
 
-	ball.position = { 1.2f, 0.0f, 0.f };
+	ball.position = { 1.2f, 0.0f, 0.0f };
 	ball.mass = 2.0f;
 	ball.radius = 0.05f;
 	ball.color = BLUE;
@@ -58,9 +58,61 @@ void Result::Initialize()
 void Result::Update()
 {
 	
+	worldMatrix = MakeAffineMatrix({ 1.0f, 1.0f,1.0f }, { 0,0,0 }, { 0,0,0 });
+	cameraMatrix = MakeAffineMatrix({ 1.0f,1.0f,1.0f }, cameraRotate, cameraTranslate);
+	viewMatrix = Inverse(cameraMatrix);
+	projectionMatrix = MakePerspectiveFovMatrix(0.45f, float(kWindowWidth) / float(kWindowHeight), 0.1f, 100.f);
+	viewMatrixProjectionMatrix = Multiply(viewMatrix, projectionMatrix);
+	worldViewProjectionMatrix = Multiply(worldMatrix, viewMatrixProjectionMatrix);
+	viewportMatrix = MakeViewportMatrix(0, 0, float(kWindowWidth), float(kWindowHeight), 0.0f, 1.0f);
+
+
+
+
+
+
 	if (start)
 	{
 		MakeSpring(spring, ball);
+		/*float deltaTime = 1.0f / 60.0f;
+		Vector3 diff = Subtract(ball.position, spring.anchor);
+		float length = Length(ball.position, spring.anchor);
+		if (length != 0.0f)
+		{
+			Vector3 direction = Normalize(diff);
+			Vector3 restPosition;
+			restPosition.x = spring.anchor.x + direction.x * spring.naturalLength;
+			restPosition.y = spring.anchor.y + direction.y * spring.naturalLength;
+			restPosition.z = spring.anchor.z + direction.z * spring.naturalLength;
+
+			Vector3 displacement;
+			displacement.x = length * (ball.position.x - restPosition.x);
+			displacement.y = length * (ball.position.y - restPosition.y);
+			displacement.z = length * (ball.position.z - restPosition.z);
+
+			Vector3 restoringForce;
+			restoringForce.x = -spring.stiffness * displacement.x;
+			restoringForce.y = -spring.stiffness * displacement.y;
+			restoringForce.z = -spring.stiffness * displacement.z;
+
+			Vector3 dampingForce;
+			dampingForce.x = -spring.dampingCoefficient * ball.velocity.x;
+			dampingForce.y = -spring.dampingCoefficient * ball.velocity.y;
+			dampingForce.z = -spring.dampingCoefficient * ball.velocity.z;
+
+
+			Vector3 force = Add(restoringForce , dampingForce);
+
+			ball.acceleration = divide(force, ball.mass);
+
+
+
+
+
+		}
+
+		ball.velocity = Add(ball.velocity, Multiply(deltaTime, ball.acceleration));
+		ball.position = Add(ball.position, Multiply(deltaTime, ball.velocity));*/
 	}
 	
 }
