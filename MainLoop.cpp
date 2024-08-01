@@ -36,13 +36,16 @@ void MainLoop::Draw() { result_->Draw(); }
 
 void MainLoop::WholeLoop() 
 {
+	Initialize();
+
+
 	// ウィンドウの×ボタンが押されるまでループ
 	while (Novice::ProcessMessage() == 0) {
 		// フレームの開始
 		Novice::BeginFrame();
 
 		InPut();
-		Initialize();
+		//Initialize();
 
 		///
 		/// ↓更新処理ここから

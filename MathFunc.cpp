@@ -935,8 +935,8 @@ void DrawCatmullRom(const Vector3& controlPoint0, const Vector3& controlPoint1, 
 void MakeSpring(Spring& spring, Ball& ball)
 {
 	float deltaTime = 1.0f / 60.0f;
-	Vector3 diff = Subtract(ball.position , spring.anchor);
-	float length = Length(diff);
+	Vector3 diff = ball.position - spring.anchor;
+	float length = Length(ball.position, spring.anchor);
 	if (length != 0.0f)
 	{
 		Vector3 direction = Normalize(diff);
@@ -961,15 +961,15 @@ void MakeSpring(Spring& spring, Ball& ball)
 		dampingForce.z = -spring.dampingCoefficient * ball.velocity.z;
 
 
-		Vector3 force =  Add(restoringForce , dampingForce);
+		Vector3 force = restoringForce + dampingForce;
 
-		ball.acceleration = divide(force , ball.mass);
-
+		ball.acceleration = force / ball.mass;
 
 	}
 
-	ball.velocity = Add(ball.velocity,Multiply(deltaTime , ball.acceleration));
-	ball.position = Add(ball.position, Multiply(deltaTime, ball.velocity));
+	ball.velocity += ball.acceleration * deltaTime;
+	ball.position += ball.velocity * deltaTime;
+
 
 }
 

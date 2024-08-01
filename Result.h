@@ -6,7 +6,7 @@ class Result
 {
 public:
 
-	Vector3 cameraRotate = {};
+	Vector3 cameraRotate;
 	Vector3 cameraTranslate;
 	Vector3 cameraPosition;
 
@@ -23,14 +23,12 @@ public:
 	//Vector3 start = ->Transform(->Transform(segment.origin, viewMatrixProjectionMatrix), viewportMatrix);
 	//Vector3 end =->Transform(->Transform(->Add(segment.origin, segment.diff), viewMatrixProjectionMatrix), viewportMatrix);
 
-
 	Spring spring{};
 
 	Ball ball{};
 
 	bool start = false;
 
-	
 
 	Vector3 screenBall = {};
 	Vector3 screenSpring = {};
