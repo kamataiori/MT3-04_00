@@ -101,4 +101,9 @@ void DrawCatmullRom(const Vector3& controlPoint0, const Vector3& controlPoint1, 
 
 void MakeSpring(Spring& spring, Ball& ball);
 
+void DrawSpring(const Spring& spring, const Ball& ball, const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewportMatrix);
+
+
 Vector3 divide(const Vector3& v1, float v2);
+
+float Length(const Vector3 & vector);

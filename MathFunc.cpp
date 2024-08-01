@@ -936,7 +936,7 @@ void MakeSpring(Spring& spring, Ball& ball)
 {
 	float deltaTime = 1.0f / 60.0f;
 	Vector3 diff = Subtract(ball.position , spring.anchor);
-	float length = Length(ball.position, spring.anchor);
+	float length = Length(diff);
 	if (length != 0.0f)
 	{
 		Vector3 direction = Normalize(diff);
@@ -973,6 +973,14 @@ void MakeSpring(Spring& spring, Ball& ball)
 
 }
 
+void DrawSpring(const Spring& spring, const Ball& ball, const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewportMatrix) {
+	// バネのアンカーから球の位置までの線を描画
+	Vector3 anchorScreen = Transform(Transform(spring.anchor, viewProjectionMatrix), viewportMatrix);
+	Vector3 ballScreen = Transform(Transform(ball.position, viewProjectionMatrix), viewportMatrix);
+
+	Novice::DrawLine((int)anchorScreen.x, (int)anchorScreen.y, (int)ballScreen.x, (int)ballScreen.y, GREEN);
+}
+
 Vector3 divide(const Vector3& v1, float v2) {
 	if (v2 != 0) {
 		return Vector3(v1.x / v2, v1.y / v2, v1.z / v2);
@@ -980,4 +988,8 @@ Vector3 divide(const Vector3& v1, float v2) {
 	else {
 		return Vector3(0, 0, 0); // ゼロ除算の場合、(0, 0, 0)ベクトルを返す
 	}
+}
+
+float Length(const Vector3& vector) {
+	return sqrt(vector.x * vector.x + vector.y * vector.y + vector.z * vector.z);
 }

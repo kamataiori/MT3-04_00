@@ -126,6 +126,8 @@ void Result::Draw()
 	DrawSphere({ ball.position, ball.radius }, viewMatrixProjectionMatrix, viewportMatrix, ball.color);
 	Novice::DrawLine((int)screenBall.x, (int)screenBall.y, (int)screenSpring.x, (int)screenSpring.y, WHITE);
 
+	DrawSpring(spring, ball, worldViewProjectionMatrix, viewportMatrix);
+
 
 	ImGui::Begin("Window");
 	if (ImGui::Button("Start"))
